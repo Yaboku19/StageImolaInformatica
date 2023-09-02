@@ -21,7 +21,7 @@ public class Prova implements Crawler{
     private final static int CONNECTION_TIMEOUT = 1000;
     private final static int READ_TIMEOUT = 5000;
 
-    private byte[] executeRequest(HttpRequestBase request) throws IOException {
+    private static byte[] executeRequest(HttpRequestBase request) throws IOException {
         RequestConfig.custom()
                 .setConnectTimeout(CONNECTION_TIMEOUT)
                 .setConnectionRequestTimeout(READ_TIMEOUT)
@@ -36,24 +36,24 @@ public class Prova implements Crawler{
         }
     }
 
-private String doGetRequest(String url) throws IOException {
-    return new String(executeRequest(new HttpGet(url)));
-}
+    public static String doGetRequest(String url) throws IOException {
+        return new String(executeRequest(new HttpGet(url)));
+    }
 
-@Override
-public void execute(Map<String, Object> mapConfig) {
-    for(String str : mapConfig.keySet()) {
-        String url = "http://localhost:8080/" + str;
-        try {
-            JSONArray array = new JSONArray(doGetRequest(url));
-            List<PastebinScrapingItem> listItem = new ArrayList<>();
-            for (int i = 0; i < array.length(); i++) {
-                listItem.add(new PastebinScrapingItem(array.getJSONObject(i)));
+    @Override
+    public void execute(Map<String, Object> mapConfig) {
+        for(String str : mapConfig.keySet()) {
+            String url = "http://localhost:8080/" + str;
+            try {
+                JSONArray array = new JSONArray(doGetRequest(url));
+                List<PastebinScrapingItem> listItem = new ArrayList<>();
+                for (int i = 0; i < array.length(); i++) {
+                    listItem.add(new PastebinScrapingItem(array.getJSONObject(i)));
+                }
+                System.out.println(listItem);
+            } catch (IOException e) {
+                System.out.println("invalid url: " + url);
             }
-            System.out.println(listItem);
-        } catch (IOException e) {
-            System.out.println("invalid url: " + url);
         }
     }
-}
 }
