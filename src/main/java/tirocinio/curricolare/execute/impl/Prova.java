@@ -32,13 +32,20 @@ public class Prova implements Crawler{
         }
     }
 
-private String doGetRequest(String url) throws IOException {
+private Object doGetRequest(String url) throws IOException {
     return new String(executeRequest(new HttpGet(url)));
 }
 
 @Override
 public void execute(Map<String, Object> mapConfig) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'execute'");
+    for(String str : mapConfig.keySet()) {
+        String url = "http://localhost:8080/" + str;
+        try {
+            Object obj = doGetRequest(url);
+            System.out.println("ok");
+        } catch (IOException e) {
+            System.out.println("invalid url: " + url);
+        }
+    }
 }
 }
