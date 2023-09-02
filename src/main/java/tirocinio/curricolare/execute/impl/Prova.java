@@ -2,6 +2,8 @@ package tirocinio.curricolare.execute.impl;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.http.client.config.RequestConfig;
@@ -10,6 +12,9 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.json.JSONArray;
+import tirocinio.curricolare.typedata.PastebinScrapingItem;
+
 import tirocinio.curricolare.execute.api.Crawler;
 
 public class Prova implements Crawler{
@@ -40,8 +45,12 @@ public void execute(Map<String, Object> mapConfig) {
     for(String str : mapConfig.keySet()) {
         String url = "http://localhost:8080/" + str;
         try {
-            String obj = doGetRequest(url);
-            System.out.println("ok");
+            JSONArray array = new JSONArray(doGetRequest(url));
+            List<PastebinScrapingItem> listItem = new ArrayList<>();
+            for (int i = 0; i < array.length(); i++) {
+                listItem.add(new PastebinScrapingItem(array.getJSONObject(i)));
+            }
+            System.out.println(listItem);
         } catch (IOException e) {
             System.out.println("invalid url: " + url);
         }

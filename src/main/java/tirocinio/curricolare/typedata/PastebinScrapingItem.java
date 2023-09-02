@@ -1,12 +1,19 @@
 package tirocinio.curricolare.typedata;
 
-import java.util.Date;
+import org.json.JSONObject;
 
 public class PastebinScrapingItem {
 
+    @Override
+    public String toString() {
+        return "PastebinScrapingItem [scrapeUrl=" + scrapeUrl + ", fullUrl=" + fullUrl + ", date=" + date + ", key="
+                + key + ", size=" + size + ", expire=" + expire + ", title=" + title + ", syntax=" + syntax + ", user="
+                + user + ", hits=" + hits + "]\n\n";
+    }
+
     private String scrapeUrl;
     private String fullUrl;
-    private Date date;
+    private String date;
     private String key;
     private String size;
     private String expire;
@@ -15,6 +22,19 @@ public class PastebinScrapingItem {
     private String user;
     private String hits;
 
+
+    public PastebinScrapingItem(JSONObject object) {
+        this.scrapeUrl = object.getString("scrape_url");
+        this.fullUrl = object.getString("full_url");
+        this.date = object.getString("date");
+        this.key = object.getString("key");
+        this.size = object.getString("size");
+        this.expire = object.getString("expire");
+        this.title = object.getString("title");
+        this.syntax = object.getString("syntax");
+        this.user = object.getString("user");
+        this.hits = object.getString("hits");
+    }
 
     public String getScrapeUrl() {
         return scrapeUrl;
@@ -32,11 +52,11 @@ public class PastebinScrapingItem {
         this.fullUrl = fullUrl;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
