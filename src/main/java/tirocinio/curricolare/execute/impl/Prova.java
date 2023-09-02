@@ -10,7 +10,6 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
-
 import tirocinio.curricolare.execute.api.Crawler;
 
 public class Prova implements Crawler{
@@ -32,7 +31,7 @@ public class Prova implements Crawler{
         }
     }
 
-private Object doGetRequest(String url) throws IOException {
+private String doGetRequest(String url) throws IOException {
     return new String(executeRequest(new HttpGet(url)));
 }
 
@@ -41,7 +40,7 @@ public void execute(Map<String, Object> mapConfig) {
     for(String str : mapConfig.keySet()) {
         String url = "http://localhost:8080/" + str;
         try {
-            Object obj = doGetRequest(url);
+            String obj = doGetRequest(url);
             System.out.println("ok");
         } catch (IOException e) {
             System.out.println("invalid url: " + url);
