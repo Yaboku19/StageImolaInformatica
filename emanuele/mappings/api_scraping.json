@@ -1,0 +1,13 @@
+{
+  "request": {
+    "urlPattern": "/api_scraping.php",
+    "method": "GET"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "bodyFileName": "api_scraping.json"
+  }
+}

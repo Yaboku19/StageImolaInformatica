@@ -1,0 +1,13 @@
+{
+  "request": {
+    "urlPath": "/api_scrape_item.php",
+    "method": "GET"
+  },
+  "response": {
+    "status": 200,
+    "headers": {
+      "Content-Type": "application/json"
+    },
+    "bodyFileName": "api_scrape_item.json"
+  }
+}
