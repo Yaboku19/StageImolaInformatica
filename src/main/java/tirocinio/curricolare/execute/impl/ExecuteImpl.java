@@ -17,7 +17,7 @@ import tirocinio.curricolare.typedata.PastebinScrapingItem;
 
 import tirocinio.curricolare.execute.api.Crawler;
 
-public class Prova implements Crawler{
+public class ExecuteImpl implements Crawler{
     private final static int CONNECTION_TIMEOUT = 1000;
     private final static int READ_TIMEOUT = 5000;
 
