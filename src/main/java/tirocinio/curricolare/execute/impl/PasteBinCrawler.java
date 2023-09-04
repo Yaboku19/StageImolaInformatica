@@ -6,7 +6,6 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import tirocinio.curricolare.execute.api.Crawler;
 import tirocinio.curricolare.typedata.PastebinScrapingItem;
 
@@ -21,8 +20,17 @@ public class PasteBinCrawler extends Crawler{
                     listItem.add(new PastebinScrapingItem((JSONObject)array.get(i)));
                 }
                 System.out.println(listItem);
+                List<String> insideList = new ArrayList<>();
+                for(PastebinScrapingItem scrapeItem : listItem) {
+                    insideList.add(getInformation(scrapeItem.getScrapeUrl()));
+                }
+                System.out.println(insideList);
             } catch (IOException | SecurityException | IllegalArgumentException | JSONException e) {
                 System.out.println("invalid url: " + url);
             }
+    }
+
+    private String getInformation(String url) throws IOException {
+        return doGetRequest(url);
     }
 }
