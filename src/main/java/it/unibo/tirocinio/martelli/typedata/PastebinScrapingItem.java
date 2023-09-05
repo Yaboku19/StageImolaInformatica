@@ -1,4 +1,4 @@
-package tirocinio.curricolare.typedata;
+package it.unibo.tirocinio.martelli.typedata;
 
 import org.json.JSONObject;
 

@@ -1,4 +1,4 @@
-package tirocinio.curricolare.setup.impl;
+package it.unibo.tirocinio.martelli.setup.impl;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -8,10 +8,8 @@ import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.yaml.snakeyaml.Yaml;
-
-import tirocinio.curricolare.setup.api.Setup;
+import it.unibo.tirocinio.martelli.setup.api.Setup;
 
 public class SetupYml implements Setup{
      private URL setupPath = ClassLoader.getSystemResource("config/config.yml");

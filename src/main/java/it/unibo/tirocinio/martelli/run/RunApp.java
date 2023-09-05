@@ -1,9 +1,9 @@
-package tirocinio.curricolare.run;
+package it.unibo.tirocinio.martelli.run;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
+import it.unibo.tirocinio.martelli.execute.api.Crawler;
+import it.unibo.tirocinio.martelli.setup.impl.SetupYml;
 
-import tirocinio.curricolare.execute.api.Crawler;
-import tirocinio.curricolare.setup.impl.SetupYml;
 @SuppressWarnings("unchecked")
 public class RunApp {
      public RunApp() {

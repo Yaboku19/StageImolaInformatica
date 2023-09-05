@@ -1,4 +1,4 @@
-package tirocinio.curricolare.setup.api;
+package it.unibo.tirocinio.martelli.setup.api;
 
 import java.util.Map;
 
