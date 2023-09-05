@@ -22,15 +22,11 @@ public class PasteBinCrawler extends Crawler{
                 System.out.println(listItem);
                 List<String> insideList = new ArrayList<>();
                 for(PastebinScrapingItem scrapeItem : listItem) {
-                    insideList.add(getInformation(scrapeItem.getScrapeUrl()));
+                    insideList.add(doGetRequest(scrapeItem.getScrapeUrl()));
                 }
                 System.out.println(insideList);
             } catch (IOException | SecurityException | IllegalArgumentException | JSONException e) {
                 System.out.println("invalid url: " + url);
             }
-    }
-
-    private String getInformation(String url) throws IOException {
-        return doGetRequest(url);
     }
 }

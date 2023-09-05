@@ -1,12 +1,10 @@
 package tirocinio.curricolare.run;
-
-import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
 import tirocinio.curricolare.execute.api.Crawler;
 import tirocinio.curricolare.setup.impl.SetupYml;
-
+@SuppressWarnings("unchecked")
 public class RunApp {
      public RunApp() {
           Map<String, Object> mapData = new SetupYml().readSetup();
@@ -15,9 +13,9 @@ public class RunApp {
                try {
                     Class<? extends Crawler> typeClass = 
                          (Class<? extends Crawler>) Class.forName(mapData.get(key).toString());
-                    Crawler crawler =
+                    Crawler crawler = 
                          typeClass.getConstructor(new Class[]{})
-                         .newInstance(new Class[]{});
+                         .newInstance();
                     crawler.execute(key);
                } catch (ClassNotFoundException |SecurityException | NoSuchMethodException |
                          InstantiationException | IllegalAccessException |
