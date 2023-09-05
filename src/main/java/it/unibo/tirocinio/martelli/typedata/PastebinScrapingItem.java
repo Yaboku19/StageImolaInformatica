@@ -1,15 +1,6 @@
 package it.unibo.tirocinio.martelli.typedata;
 
-import org.json.JSONObject;
-
 public class PastebinScrapingItem {
-
-    @Override
-    public String toString() {
-        return "PastebinScrapingItem [scrapeUrl=" + scrapeUrl + ", fullUrl=" + fullUrl + ", date=" + date + ", key="
-                + key + ", size=" + size + ", expire=" + expire + ", title=" + title + ", syntax=" + syntax + ", user="
-                + user + ", hits=" + hits + "]\n\n";
-    }
 
     private String scrapeUrl;
     private String fullUrl;
@@ -22,25 +13,26 @@ public class PastebinScrapingItem {
     private String user;
     private String hits;
 
-
-    public PastebinScrapingItem(JSONObject object) {
-        this.scrapeUrl = object.getString("scrape_url");
-        this.fullUrl = object.getString("full_url");
-        this.date = object.getString("date");
-        this.key = object.getString("key");
-        this.size = object.getString("size");
-        this.expire = object.getString("expire");
-        this.title = object.getString("title");
-        this.syntax = object.getString("syntax");
-        this.user = object.getString("user");
-        this.hits = object.getString("hits");
+    public PastebinScrapingItem(final String scrapeUrl, final String fullUrl,
+            final String date, final String key, final String size, final String expire,
+            final String title, final String syntax, final String user, final String hits) {
+        this.scrapeUrl = scrapeUrl;
+        this.fullUrl = fullUrl;
+        this.date = date;
+        this.key = key;
+        this.size = size;
+        this.expire = expire;
+        this.title = title;
+        this.syntax = syntax;
+        this.user = user;
+        this.hits = hits;
     }
 
     public String getScrapeUrl() {
         return scrapeUrl;
     }
 
-    public void setScrapeUrl(String scrapeUrl) {
+    public void setScrapeUrl(final String scrapeUrl) {
         this.scrapeUrl = scrapeUrl;
     }
 
@@ -48,7 +40,7 @@ public class PastebinScrapingItem {
         return fullUrl;
     }
 
-    public void setFullUrl(String fullUrl) {
+    public void setFullUrl(final String fullUrl) {
         this.fullUrl = fullUrl;
     }
 
@@ -56,7 +48,7 @@ public class PastebinScrapingItem {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(final String date) {
         this.date = date;
     }
 
@@ -64,7 +56,7 @@ public class PastebinScrapingItem {
         return key;
     }
 
-    public void setKey(String key) {
+    public void setKey(final String key) {
         this.key = key;
     }
 
@@ -72,7 +64,7 @@ public class PastebinScrapingItem {
         return size;
     }
 
-    public void setSize(String size) {
+    public void setSize(final String size) {
         this.size = size;
     }
 
@@ -80,7 +72,7 @@ public class PastebinScrapingItem {
         return expire;
     }
 
-    public void setExpire(String expire) {
+    public void setExpire(final String expire) {
         this.expire = expire;
     }
 
@@ -88,7 +80,7 @@ public class PastebinScrapingItem {
         return title;
     }
 
-    public void setTitle(String title) {
+    public void setTitle(final String title) {
         this.title = title;
     }
 
@@ -96,7 +88,7 @@ public class PastebinScrapingItem {
         return syntax;
     }
 
-    public void setSyntax(String syntax) {
+    public void setSyntax(final String syntax) {
         this.syntax = syntax;
     }
 
@@ -104,7 +96,7 @@ public class PastebinScrapingItem {
         return user;
     }
 
-    public void setUser(String user) {
+    public void setUser(final String user) {
         this.user = user;
     }
 
@@ -112,8 +104,15 @@ public class PastebinScrapingItem {
         return hits;
     }
 
-    public void setHits(String hits) {
+    public void setHits(final String hits) {
         this.hits = hits;
-    }   
+    }
+
+    @Override
+    public String toString() {
+        return "PastebinScrapingItem [scrapeUrl=" + scrapeUrl + ", fullUrl=" + fullUrl + ", date=" + date + ", key="
+                + key + ", size=" + size + ", expire=" + expire + ", title=" + title + ", syntax=" + syntax + ", user="
+                + user + ", hits=" + hits + "]\n\n";
+    }
 }
 

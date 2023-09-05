@@ -43,7 +43,7 @@ public abstract class Crawler {
           this.readTimeout = data;
      }
 
-     public abstract void execute(Map<String, Object> config);
+     public abstract void execute(Map<String, Object> config) throws IOException;
 
      public abstract String getConfigPrefix();
 }
