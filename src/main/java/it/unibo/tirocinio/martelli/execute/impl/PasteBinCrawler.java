@@ -1,15 +1,7 @@
 package it.unibo.tirocinio.martelli.execute.impl;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import it.unibo.tirocinio.martelli.execute.api.Crawler;
-import it.unibo.tirocinio.martelli.typedata.PastebinScrapingItem;
 
 public class PasteBinCrawler extends Crawler{
     @Override
