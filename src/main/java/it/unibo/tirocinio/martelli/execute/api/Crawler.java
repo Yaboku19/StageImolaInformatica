@@ -2,6 +2,8 @@ package it.unibo.tirocinio.martelli.execute.api;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Map;
+
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -10,14 +12,15 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 
 public abstract class Crawler {
-     private final int CONNECTION_TIMEOUT = 1000;
-     private final int READ_TIMEOUT = 5000;
+     private int connectionTimeout = 0;
+     private int readTimeout = 0;
 
-     private byte[] executeRequest(HttpRequestBase request) throws IOException {
+     private byte[] executeRequest(final HttpRequestBase request) throws IOException {
           RequestConfig.custom()
-                    .setConnectTimeout(CONNECTION_TIMEOUT)
-                    .setConnectionRequestTimeout(READ_TIMEOUT)
-                    .setSocketTimeout(CONNECTION_TIMEOUT).build();
+                    .setConnectTimeout(connectionTimeout)
+                    .setConnectionRequestTimeout(readTimeout
+          )
+                    .setSocketTimeout(connectionTimeout).build();
           
           try (CloseableHttpClient httpclient = HttpClientBuilder.create().build();
                     CloseableHttpResponse response = httpclient.execute(request); 
@@ -28,9 +31,19 @@ public abstract class Crawler {
           }
      }
 
-     public String doGetRequest(String url) throws IOException {
+     protected String doGetRequest(final String url) throws IOException {
           return new String(executeRequest(new HttpGet(url)));
      }
-     public abstract void execute(String str);
 
+     protected void setConnectionTimeout(final int data) {
+          this.connectionTimeout = data;
+     }
+     
+     protected void setReadTimeout(final int data) {
+          this.readTimeout = data;
+     }
+
+     public abstract void execute(Map<String, Object> config);
+
+     public abstract String getConfigPrefix();
 }

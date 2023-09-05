@@ -1,10 +1,17 @@
 package it.unibo.tirocinio.martelli;
 
-import it.unibo.tirocinio.martelli.run.RunApp;
+import java.lang.reflect.InvocationTargetException;
+
+import it.unibo.tirocinio.martelli.execute.impl.CrawlerFactory;
 
 public class App {
     public static void main( String[] args ) {
-        new RunApp();
-        
+        try {
+            new CrawlerFactory().createCrawler();
+        } catch (InstantiationException | IllegalAccessException | IllegalArgumentException 
+                | InvocationTargetException| NoSuchMethodException | SecurityException
+                | ClassNotFoundException e) {
+            e.printStackTrace();
+        };
     }
 }

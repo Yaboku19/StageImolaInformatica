@@ -1,1 +1,9 @@
-//api_scraping.php: tirocinio.curricolare.execute.impl.PasteBinCrawler
+crawler:
+  prefix: it.unibo.tirocinio.martelli.execute.impl.
+  load_class:
+    - PasteBinCrawler
+  pastebin:
+    base_url: /api_scraping.php
+    timeout:
+      read: 10
+      connect: 20
