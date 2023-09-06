@@ -5,5 +5,5 @@ crawler:
   pastebin:
     base_url: /api_scraping.php
     timeout:
-      read: 10
-      connect: 20
+      read: 5000
+      connect: 1000
