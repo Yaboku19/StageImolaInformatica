@@ -11,23 +11,26 @@ import org.json.JSONObject;
 import it.unibo.tirocinio.martelli.execute.api.Crawler;
 import it.unibo.tirocinio.martelli.typedata.PastebinScrapingItem;
 
+@SuppressWarnings("unchecked")
 public class PasteBinCrawler extends Crawler{
     @Override
     public void execute(final Map<String, Object> config) throws IOException{
         System.out.println(config);
+        setConnectionTimeout((Integer)((Map<String, Object>)config.get("timeout"))
+                            .get("connect"));
+        setReadTimeout((Integer)((Map<String, Object>)config.get("timeout"))
+                            .get("read"));
+        System.out.println("http://localhost:8080" + config.get("base_url"));
         final JSONArray ScrapingList = new JSONArray(doGetRequest("http://localhost:8080"
-                                                + config.get("base_url")));
+                                                + (String)config.get("base_url")));
+        System.out.println("+++++++++++++++++++++++++++++++++++++++++");
         final List<PastebinScrapingItem> scrapingItems = getScrapingItem(ScrapingList);
         System.out.println(scrapingItems);
-        /*
-            final List<String> insideList = new ArrayList<>();
-            for(PastebinScrapingItem scrapeItem : listItem) {
+        final List<String> insideList = new ArrayList<>();
+        for(PastebinScrapingItem scrapeItem : scrapingItems) {
                 insideList.add(doGetRequest(scrapeItem.getScrapeUrl()));
-            }
-            System.out.println(insideList);
-        } catch (IOException | SecurityException | IllegalArgumentException | JSONException e) {
-            System.out.println("invalid url: " + url);
-        }*/
+        }
+        System.out.println(insideList);
     }
 
     private List<PastebinScrapingItem> getScrapingItem(final JSONArray scrapingList) {
