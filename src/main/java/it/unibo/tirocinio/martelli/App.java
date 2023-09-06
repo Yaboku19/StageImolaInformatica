@@ -2,7 +2,6 @@ package it.unibo.tirocinio.martelli;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-
 import it.unibo.tirocinio.martelli.execute.impl.CrawlerFactory;
 
 public class App {

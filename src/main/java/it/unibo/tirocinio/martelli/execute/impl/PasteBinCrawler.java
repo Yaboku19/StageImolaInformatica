@@ -4,10 +4,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import it.unibo.tirocinio.martelli.execute.api.Crawler;
 import it.unibo.tirocinio.martelli.typedata.PastebinScrapingItem;
 
@@ -19,38 +17,25 @@ public class PasteBinCrawler extends Crawler{
                             .get("connect"));
         setReadTimeout((Integer)((Map<String, Object>)config.get("timeout"))
                             .get("read"));
-        final JSONArray ScrapingList = new JSONArray(doGetRequest("http://localhost:8080"
-                                                + (String)config.get("base_url")));
-        final List<PastebinScrapingItem> scrapingItems = getScrapingItem(ScrapingList);
+
+        List<PastebinScrapingItem> list = getScrapingItem(doGetRequest("http://localhost:8080"
+                                    + (String)config.get("base_url")));
         final List<String> insideList = new ArrayList<>();
-        for(PastebinScrapingItem scrapeItem : scrapingItems) {
-                insideList.add(doGetRequest(scrapeItem.getScrapeUrl()));
+        for(PastebinScrapingItem item : list) {
+            insideList.add(doGetRequest(item.getScrapeUrl()));
         }
         System.out.println(insideList);
     }
 
-    private List<PastebinScrapingItem> getScrapingItem(final JSONArray scrapingList) {
-        final List<PastebinScrapingItem> scrapingItems = new ArrayList<>();
-        for (int i = 0; i < scrapingList.length(); i++) {
-            JSONObject dataObject = (JSONObject) scrapingList.get(i);
-            scrapingItems.add(new PastebinScrapingItem(
-                getData("scrape_url", dataObject),
-                getData("full_url", dataObject),
-                getData("date", dataObject),
-                getData("key", dataObject),
-                getData("size", dataObject),
-                getData("expire", dataObject),
-                getData("title", dataObject),
-                getData("syntax", dataObject),
-                getData("user", dataObject),
-                getData("hits", dataObject)
-            ));
+    private List<PastebinScrapingItem> getScrapingItem(final String data) throws IOException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        JsonNode jsonArray = objectMapper.readTree(data);
+        List<PastebinScrapingItem> list = new ArrayList<>();
+        for (JsonNode element : jsonArray) {
+            PastebinScrapingItem object = objectMapper.treeToValue(element, PastebinScrapingItem.class);
+            list.add(object);
         }
-        return scrapingItems;   
-    }
-
-    private String getData(final String field, final JSONObject dataObject) {
-        return (String) dataObject.getString(field);
+        return list;
     }
 
     @Override

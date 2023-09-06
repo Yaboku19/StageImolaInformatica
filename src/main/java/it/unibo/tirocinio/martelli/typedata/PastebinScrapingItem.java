@@ -1,5 +1,7 @@
 package it.unibo.tirocinio.martelli.typedata;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class PastebinScrapingItem {
 
     private String scrapeUrl;
@@ -13,25 +15,11 @@ public class PastebinScrapingItem {
     private String user;
     private String hits;
 
-    public PastebinScrapingItem(final String scrapeUrl, final String fullUrl,
-            final String date, final String key, final String size, final String expire,
-            final String title, final String syntax, final String user, final String hits) {
-        this.scrapeUrl = scrapeUrl;
-        this.fullUrl = fullUrl;
-        this.date = date;
-        this.key = key;
-        this.size = size;
-        this.expire = expire;
-        this.title = title;
-        this.syntax = syntax;
-        this.user = user;
-        this.hits = hits;
-    }
-
     public String getScrapeUrl() {
         return scrapeUrl;
     }
 
+    @JsonProperty("scrape_url")
     public void setScrapeUrl(final String scrapeUrl) {
         this.scrapeUrl = scrapeUrl;
     }
@@ -40,6 +28,7 @@ public class PastebinScrapingItem {
         return fullUrl;
     }
 
+    @JsonProperty("full_url")
     public void setFullUrl(final String fullUrl) {
         this.fullUrl = fullUrl;
     }
