@@ -15,25 +15,26 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 @SuppressWarnings("unchecked")
 public class PasteBinCrawler extends Crawler {
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
+
     @Override
     public void execute(final Map<String, Object> config) throws IOException {
         setConnectionTimeout((Integer)((Map<String, Object>)config.get("timeout"))
                             .get("connect"));
         setReadTimeout((Integer)((Map<String, Object>)config.get("timeout"))
                             .get("read"));
-        final List<PastebinScrapingItem> list = getScrapingItem(doGetRequest((String) config.get("url")));
-        final List<String> insideList = new ArrayList<>();
-        System.out.println(list.size());
-        for (int i = 0; i < list.size(); i++) {
-            scheduler.schedule(getReader(insideList, list.get(i)), i * getWaitingTime(config), SECONDS);
+        final List<PastebinScrapingItem> scrapingList = 
+                getScrapingItem(doGetRequest((String) config.get("url")));
+        final List<String> scrapeList = new ArrayList<>();
+        for (int i = 0; i < scrapingList.size(); i++) {
+            scheduler.schedule(getReader(scrapeList, scrapingList.get(i)), 
+                                i * getWaitingTime(config), SECONDS);
         }
         scheduler.schedule(new Runnable() {
             @Override
             public void run() {
-                System.out.println(insideList);
+                System.out.println(scrapeList);
             }
-        }, list.size() * getWaitingTime(config), SECONDS);
-        
+        }, scrapingList.size() * getWaitingTime(config), SECONDS);
     }
 
     private int getWaitingTime(final Map<String, Object> config) {
@@ -43,20 +44,21 @@ public class PasteBinCrawler extends Crawler {
     private List<PastebinScrapingItem> getScrapingItem(final String data) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         JsonNode jsonArray = objectMapper.readTree(data);
-        List<PastebinScrapingItem> list = new ArrayList<>();
-        for (JsonNode element : jsonArray) {
-            PastebinScrapingItem object = objectMapper.treeToValue(element, PastebinScrapingItem.class);
-            list.add(object);
+        List<PastebinScrapingItem> scrapingList = new ArrayList<>();
+        for (JsonNode node : jsonArray) {
+            PastebinScrapingItem scraping = 
+                    objectMapper.treeToValue(node, PastebinScrapingItem.class);
+            scrapingList.add(scraping);
         }
-        return list;
+        return scrapingList;
     }
 
-    private Runnable getReader(final List<String> insideList, final PastebinScrapingItem item) {
+    private Runnable getReader(final List<String> scrapeList, final PastebinScrapingItem scraping) {
         return new Runnable() {
             @Override
             public void run() {
                 try {
-                    insideList.add(doGetRequest(item.getScrapeUrl()));
+                    scrapeList.add(doGetRequest(scraping.getScrapeUrl()));
                     System.out.println("fatto");
                 } catch (IOException e) {
                     e.printStackTrace();
