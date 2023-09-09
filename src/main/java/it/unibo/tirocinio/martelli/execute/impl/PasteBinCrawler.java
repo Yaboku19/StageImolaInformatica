@@ -10,19 +10,21 @@ import it.unibo.tirocinio.martelli.execute.api.Crawler;
 import it.unibo.tirocinio.martelli.typedata.PastebinScrapingItem;
 
 @SuppressWarnings("unchecked")
-public class PasteBinCrawler extends Crawler{
+public class PasteBinCrawler extends Crawler {
     @Override
-    public void execute(final Map<String, Object> config) throws IOException{
+    public void execute(final Map<String, Object> config) throws IOException {
         setConnectionTimeout((Integer)((Map<String, Object>)config.get("timeout"))
                             .get("connect"));
         setReadTimeout((Integer)((Map<String, Object>)config.get("timeout"))
                             .get("read"));
 
-        List<PastebinScrapingItem> list = getScrapingItem(doGetRequest("http://localhost:8080"
-                                    + (String)config.get("base_url")));
+        List<PastebinScrapingItem> list = getScrapingItem(doGetRequest((String) config.get("url")));
         final List<String> insideList = new ArrayList<>();
         for(PastebinScrapingItem item : list) {
             insideList.add(doGetRequest(item.getScrapeUrl()));
+            /*
+             * waiting time Executor
+             */
         }
         System.out.println(insideList);
     }

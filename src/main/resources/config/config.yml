@@ -3,7 +3,8 @@ crawler:
   load_class:
     - PasteBinCrawler
   pastebin:
-    base_url: /api_scraping.php
+    url: "http://localhost:8080/api_scraping.php"
+    waitingTime: 1000
     timeout:
       read: 5000
       connect: 1000
