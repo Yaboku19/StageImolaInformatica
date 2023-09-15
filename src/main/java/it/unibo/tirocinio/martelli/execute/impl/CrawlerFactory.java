@@ -1,6 +1,7 @@
 package it.unibo.tirocinio.martelli.execute.impl;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
+import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Map;
 import it.unibo.tirocinio.martelli.execute.api.Crawler;
@@ -8,7 +9,7 @@ import it.unibo.tirocinio.martelli.setup.impl.SetupYml;
 
 @SuppressWarnings("unchecked")
 public class CrawlerFactory {
-     public void createCrawler() throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, ClassNotFoundException, IOException {
+     public void createCrawler() throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException, NoSuchMethodException, SecurityException, ClassNotFoundException, IOException, URISyntaxException {
           final Map<String, Object> config = 
                (Map<String, Object>)new SetupYml().readSetup().get("crawler");
           final String prefix = config.get("prefix").toString();

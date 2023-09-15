@@ -35,6 +35,7 @@ public class PasteBinCrawler extends Crawler {
                 System.out.println(scrapeList);
             }
         }, scrapingList.size() * getWaitingTime(config), SECONDS);
+        scheduler.shutdown();
     }
 
     private int getWaitingTime(final Map<String, Object> config) {
