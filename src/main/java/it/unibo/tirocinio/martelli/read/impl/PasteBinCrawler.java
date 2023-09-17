@@ -1,4 +1,4 @@
-package it.unibo.tirocinio.martelli.execute.impl;
+package it.unibo.tirocinio.martelli.read.impl;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -6,7 +6,8 @@ import java.util.List;
 import java.util.Map;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import it.unibo.tirocinio.martelli.execute.api.Crawler;
+
+import it.unibo.tirocinio.martelli.read.api.Crawler;
 import it.unibo.tirocinio.martelli.typedata.PastebinScrapingItem;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;

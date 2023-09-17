@@ -1,10 +1,11 @@
-package it.unibo.tirocinio.martelli.execute.impl;
+package it.unibo.tirocinio.martelli.read.impl;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Map;
-import it.unibo.tirocinio.martelli.execute.api.Crawler;
+
+import it.unibo.tirocinio.martelli.read.api.Crawler;
 import it.unibo.tirocinio.martelli.setup.impl.SetupYml;
 
 @SuppressWarnings("unchecked")
