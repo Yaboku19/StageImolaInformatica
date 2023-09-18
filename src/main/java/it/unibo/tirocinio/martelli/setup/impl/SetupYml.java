@@ -12,9 +12,8 @@ import org.yaml.snakeyaml.Yaml;
 import it.unibo.tirocinio.martelli.setup.api.Setup;
 
 public class SetupYml implements Setup{
-     private URL setupPath = ClassLoader.getSystemResource("config/config.yml");
 
-     public Map<String, Object> readSetup() throws FileNotFoundException, IOException, URISyntaxException {
+     public Map<String, Object> readSetup(final URL setupPath) throws FileNotFoundException, IOException, URISyntaxException {
           try (InputStream inputStream = new FileInputStream(new File(setupPath.toURI()))) {
                Yaml yaml = new Yaml();
                Map<String, Object> data = yaml.load(inputStream);

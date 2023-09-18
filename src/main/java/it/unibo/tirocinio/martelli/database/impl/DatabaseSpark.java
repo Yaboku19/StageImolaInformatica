@@ -28,5 +28,10 @@ public class DatabaseSpark implements Database{
                System.out.println(myrdd.count());
           }
      }
+
+     @Override
+     public String removeElement() {
+          return "";
+     }
      
 }

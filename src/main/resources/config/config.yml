@@ -1,5 +1,5 @@
 crawler:
-  prefix: it.unibo.tirocinio.martelli.execute.impl.
+  prefix: it.unibo.tirocinio.martelli.read.impl.
   load_class:
     - PasteBinCrawler
   pastebin:

@@ -7,6 +7,7 @@ import java.util.Map;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import it.unibo.tirocinio.martelli.model.api.CrawlerObserver;
 import it.unibo.tirocinio.martelli.read.api.Crawler;
 import it.unibo.tirocinio.martelli.typedata.PastebinScrapingItem;
 import java.util.concurrent.Executors;
@@ -16,9 +17,10 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 @SuppressWarnings("unchecked")
 public class PasteBinCrawler extends Crawler {
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-
+    private CrawlerObserver model;
     @Override
-    public void execute(final Map<String, Object> config) throws IOException {
+    public void execute(final Map<String, Object> config, final CrawlerObserver model) throws IOException {
+        this.model = model;
         setConnectionTimeout((Integer)((Map<String, Object>)config.get("timeout"))
                             .get("connect"));
         setReadTimeout((Integer)((Map<String, Object>)config.get("timeout"))
@@ -30,7 +32,7 @@ public class PasteBinCrawler extends Crawler {
             scheduler.schedule(getReader(scrapeList, scrapingList.get(i)), 
                                 i * getWaitingTime(config), SECONDS);
         }
-        scheduler.schedule(new Runnable() {
+        scheduler.schedule(new Runnable() {         // da cancellare in futuro
             @Override
             public void run() {
                 System.out.println(scrapeList);
@@ -61,6 +63,7 @@ public class PasteBinCrawler extends Crawler {
             public void run() {
                 try {
                     scrapeList.add(doGetRequest(scraping.getScrapeUrl()));
+                    // addElement to database
                     System.out.println("fatto");
                 } catch (IOException e) {
                     e.printStackTrace();
