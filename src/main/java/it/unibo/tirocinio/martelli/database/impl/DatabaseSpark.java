@@ -11,14 +11,14 @@ public class DatabaseSpark implements Database{
 
      @Override
      public void addElement(String element) {
-          
+          System.out.println("added");
      }
 
      public static void main(String[] args) {
-               try(final var spark = SparkSession.builder()
-                                   .appName("Prova")
-                                   .master("local[*]")
-                                   .getOrCreate();
+          try(final var spark = SparkSession.builder()
+                              .appName("Prova")
+                              .master("local[*]")
+                              .getOrCreate();
                     final var  sc = new JavaSparkContext(spark.sparkContext())) {
                final var data = Stream.iterate(1, x -> x + 1)
                     .limit(5)
@@ -27,6 +27,7 @@ public class DatabaseSpark implements Database{
                final var myrdd = sc.parallelize(data);
                System.out.println(myrdd.count());
           }
+          
      }
 
      @Override

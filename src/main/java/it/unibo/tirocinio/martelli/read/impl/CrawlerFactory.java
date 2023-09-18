@@ -22,8 +22,8 @@ public class CrawlerFactory {
           for (final String name : classNameList) {
                Crawler crawler = (Crawler) Class.forName(prefix + name)
                               .getConstructor(new Class[]{}).newInstance();
-               // Thread da fare
-               crawler.execute((Map<String, Object>)config.get(crawler.getConfigPrefix()), model);
+               crawler.setVariable((Map<String, Object>) config.get(crawler.getConfigPrefix()), model);
+               crawler.start();
           }
      }
 }

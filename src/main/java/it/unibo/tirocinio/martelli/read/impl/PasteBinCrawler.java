@@ -18,26 +18,28 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 public class PasteBinCrawler extends Crawler {
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     private CrawlerObserver model;
+    private Map<String, Object> config;
     @Override
-    public void execute(final Map<String, Object> config, final CrawlerObserver model) throws IOException {
+    public void setVariable(final Map<String, Object> config, final CrawlerObserver model) throws IOException {
         this.model = model;
+        this.config = config;
+    }
+
+    private void execute() {
         setConnectionTimeout((Integer)((Map<String, Object>)config.get("timeout"))
                             .get("connect"));
         setReadTimeout((Integer)((Map<String, Object>)config.get("timeout"))
                             .get("read"));
-        final List<PastebinScrapingItem> scrapingList = 
-                getScrapingItem(doGetRequest((String) config.get("url")));
-        final List<String> scrapeList = new ArrayList<>();
+        List<PastebinScrapingItem> scrapingList = new ArrayList<>();
+        try {
+            scrapingList = getScrapingItem(doGetRequest((String) config.get("url")));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         for (int i = 0; i < scrapingList.size(); i++) {
-            scheduler.schedule(getReader(scrapeList, scrapingList.get(i)), 
+            scheduler.schedule(getReader(scrapingList.get(i)), 
                                 i * getWaitingTime(config), SECONDS);
         }
-        scheduler.schedule(new Runnable() {         // da cancellare in futuro
-            @Override
-            public void run() {
-                System.out.println(scrapeList);
-            }
-        }, scrapingList.size() * getWaitingTime(config), SECONDS);
         scheduler.shutdown();
     }
 
@@ -57,13 +59,12 @@ public class PasteBinCrawler extends Crawler {
         return scrapingList;
     }
 
-    private Runnable getReader(final List<String> scrapeList, final PastebinScrapingItem scraping) {
+    private Runnable getReader(final PastebinScrapingItem scraping) {
         return new Runnable() {
             @Override
             public void run() {
                 try {
-                    scrapeList.add(doGetRequest(scraping.getScrapeUrl()));
-                    // addElement to database
+                    model.addDatabaseElement(doGetRequest(scraping.getScrapeUrl()));
                     System.out.println("fatto");
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -76,4 +77,9 @@ public class PasteBinCrawler extends Crawler {
     public String getConfigPrefix() {
         return "pastebin";
     }
+
+    @Override
+    public void run(){  
+        execute();
+    }  
 }
