@@ -11,9 +11,12 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import it.unibo.tirocinio.martelli.controller.api.CrawlerObserver;
 
+@SuppressWarnings("unchecked")
 public abstract class Crawler implements Runnable{
      private int connectionTimeout = 0;
      private int readTimeout = 0;
+     private CrawlerObserver controller;
+     private Map<String, Object> config;
 
      private byte[] executeRequest(final HttpRequestBase request) throws IOException {
           RequestConfig.custom()
@@ -35,15 +38,29 @@ public abstract class Crawler implements Runnable{
           return new String(executeRequest(new HttpGet(url)));
      }
 
-     protected void setConnectionTimeout(final int data) {
-          this.connectionTimeout = data;
-     }
-     
-     protected void setReadTimeout(final int data) {
-          this.readTimeout = data;
+     @Override
+     public void run(){  
+         execute();
      }
 
-     public abstract void setVariable(Map<String, Object> config, CrawlerObserver controller);
+     public void setVariable(final Map<String, Object> config, final CrawlerObserver controller) {
+          this.controller = controller;
+          this.config = config;
+          this.connectionTimeout = (Integer)((Map<String, Object>)getConfig().get("timeout"))
+               .get("connect");
+          this.readTimeout = (Integer)((Map<String, Object>)getConfig().get("timeout"))
+               .get("read");
+     }
+
+     protected Map<String, Object> getConfig() {
+          return config;
+     }
+
+     protected CrawlerObserver getController() {
+          return controller;
+     }
+
+     protected abstract void execute();
 
      public abstract String getConfigPrefix();
 }
