@@ -11,7 +11,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
 import it.unibo.tirocinio.martelli.controller.api.CrawlerObserver;
 
-public abstract class Crawler extends Thread{
+public abstract class Crawler implements Runnable{
      private int connectionTimeout = 0;
      private int readTimeout = 0;
 

@@ -18,6 +18,7 @@ public class PasteBinCrawler extends Crawler {
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
     private CrawlerObserver controller;
     private Map<String, Object> config;
+
     @Override
     public void setVariable(final Map<String, Object> config, final CrawlerObserver controller) {
         this.controller = controller;
