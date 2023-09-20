@@ -10,7 +10,7 @@ import it.unibo.tirocinio.martelli.database.api.Database;
 public class DatabaseSpark implements Database{
 
      @Override
-     public void addElement(String element) {
+     public synchronized void addElement(String element) {
           System.out.println("added");
      }
 

@@ -9,8 +9,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
-
-import it.unibo.tirocinio.martelli.model.api.CrawlerObserver;
+import it.unibo.tirocinio.martelli.controller.api.CrawlerObserver;
 
 public abstract class Crawler extends Thread{
      private int connectionTimeout = 0;
@@ -44,7 +43,7 @@ public abstract class Crawler extends Thread{
           this.readTimeout = data;
      }
 
-     public abstract void setVariable(Map<String, Object> config, CrawlerObserver model) throws IOException;
+     public abstract void setVariable(Map<String, Object> config, CrawlerObserver controller) throws IOException;
 
      public abstract String getConfigPrefix();
 }

@@ -1,4 +1,4 @@
-package it.unibo.tirocinio.martelli.model.api;
+package it.unibo.tirocinio.martelli.controller.api;
 
 public interface CrawlerObserver {
      void addDatabaseElement(String element);

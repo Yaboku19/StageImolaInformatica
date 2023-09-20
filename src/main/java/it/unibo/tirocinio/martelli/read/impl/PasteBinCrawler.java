@@ -6,8 +6,7 @@ import java.util.List;
 import java.util.Map;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-
-import it.unibo.tirocinio.martelli.model.api.CrawlerObserver;
+import it.unibo.tirocinio.martelli.controller.api.CrawlerObserver;
 import it.unibo.tirocinio.martelli.read.api.Crawler;
 import it.unibo.tirocinio.martelli.typedata.PastebinScrapingItem;
 import java.util.concurrent.Executors;
@@ -17,11 +16,11 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 @SuppressWarnings("unchecked")
 public class PasteBinCrawler extends Crawler {
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
-    private CrawlerObserver model;
+    private CrawlerObserver controller;
     private Map<String, Object> config;
     @Override
-    public void setVariable(final Map<String, Object> config, final CrawlerObserver model) throws IOException {
-        this.model = model;
+    public void setVariable(final Map<String, Object> config, final CrawlerObserver controller) throws IOException {
+        this.controller = controller;
         this.config = config;
     }
 
@@ -64,7 +63,7 @@ public class PasteBinCrawler extends Crawler {
             @Override
             public void run() {
                 try {
-                    model.addDatabaseElement(doGetRequest(scraping.getScrapeUrl()));
+                    controller.addDatabaseElement(doGetRequest(scraping.getScrapeUrl()));
                     System.out.println("fatto");
                 } catch (IOException e) {
                     e.printStackTrace();
