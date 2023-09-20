@@ -19,7 +19,7 @@ public class PasteBinCrawler extends Crawler {
     private CrawlerObserver controller;
     private Map<String, Object> config;
     @Override
-    public void setVariable(final Map<String, Object> config, final CrawlerObserver controller) throws IOException {
+    public void setVariable(final Map<String, Object> config, final CrawlerObserver controller) {
         this.controller = controller;
         this.config = config;
     }

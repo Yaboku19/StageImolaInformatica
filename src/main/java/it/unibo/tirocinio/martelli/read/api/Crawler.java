@@ -43,7 +43,7 @@ public abstract class Crawler extends Thread{
           this.readTimeout = data;
      }
 
-     public abstract void setVariable(Map<String, Object> config, CrawlerObserver controller) throws IOException;
+     public abstract void setVariable(Map<String, Object> config, CrawlerObserver controller);
 
      public abstract String getConfigPrefix();
 }
