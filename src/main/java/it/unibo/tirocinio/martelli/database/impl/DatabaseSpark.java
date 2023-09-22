@@ -7,7 +7,7 @@ import org.apache.spark.api.java.JavaSparkContext;
 import org.apache.spark.sql.SparkSession;
 import it.unibo.tirocinio.martelli.database.api.Database;
 
-public class DatabaseSpark implements Database{
+public class DatabaseSpark implements Database {
 
      @Override
      public synchronized void addElement(String element) {
