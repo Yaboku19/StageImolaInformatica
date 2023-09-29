@@ -10,7 +10,7 @@ import it.unibo.tirocinio.martelli.database.api.Database;
 import it.unibo.tirocinio.martelli.database.impl.DatabaseSpark;
 import it.unibo.tirocinio.martelli.read.impl.CrawlerFactory;
 
-public class ControllerImpl implements Controller, CrawlerObserver{
+public class ControllerImpl implements Controller, CrawlerObserver {
      private final Database database;
      private final CrawlerFactory factory;
      private final URL setupPath = ClassLoader.getSystemResource("config/config.yml");

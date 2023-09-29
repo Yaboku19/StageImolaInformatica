@@ -4,4 +4,6 @@ public interface Database {
      void addElement(String element);
 
      String removeElement();
+
+     void closeDatabase();
 }
