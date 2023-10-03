@@ -6,4 +6,8 @@ public interface Database {
      String removeElement();
 
      void closeDatabase();
+
+     void show();
+
+     boolean isNotEmpty();
 }

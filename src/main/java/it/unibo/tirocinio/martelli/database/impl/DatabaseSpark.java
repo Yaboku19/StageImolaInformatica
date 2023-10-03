@@ -33,56 +33,53 @@ public class DatabaseSpark implements Database {
 
      @Override
      public void addElement(final String element) {
-          final long Oldversion = this.version;
+          final long oldVersion = this.version;
           final Row newRow = RowFactory.create(element);
           Dataset<Row> databaseNew = this.database.union(spark.createDataFrame(Collections.singletonList(newRow), structType));
-          if (!save(Oldversion, databaseNew)) {
+          if (save(oldVersion, databaseNew)) {
                addElement(element);
           }
      }
 
-     private synchronized boolean save(final long Oldversion, final Dataset<Row> databaseNew) {
-          if (Oldversion == version) {
+     private synchronized boolean save(final long oldVersion, final Dataset<Row> databaseNew) {
+          if (oldVersion == version) {
                this.database = databaseNew;
                version += 1;
-               return true;
+               return false;
           }
-          return false;
+          return true;
      }
 
      public static void main(String[] args) {
-          DatabaseSpark database = new DatabaseSpark();
-          database.show();
-          database.addElement("ciao");
-          database.addElement("casa");
-          database.show();
-          String value = database.removeElement();
-          System.out.println(value);
-          database.show();
-          database.closeDatabase();
+
      }
 
      @Override
      public String removeElement() {
-          final long oldversion = version;
+          final long oldVersion = version;
           List<Row> list = new ArrayList<>(database.collectAsList());
           final String toRemove = list.get(0).toString();
           list.remove(0);
           Dataset<Row> databaseNew = spark.createDataFrame(list, structType);
-          if (!save(oldversion, databaseNew)) {
+          if (save(oldVersion, databaseNew)) {
                return removeElement();
           }
           return toRemove;
      }
 
+     @Override
      public void show() {
           database.show();
+     }
+
+     @Override
+     public boolean isNotEmpty() {
+          return database.count() > 0;
      }
 
      @Override
      public void closeDatabase() {
           spark.close();
      }
-     
 }
 // [0-9a-z._-]+@(?:[^ .@]+\.)+[a-z]{2,4} per trovare l'e-mail
