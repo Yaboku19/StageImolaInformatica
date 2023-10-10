@@ -4,6 +4,8 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.List;
+
 import it.unibo.tirocinio.martelli.controller.api.CrawlerObserver;
 import it.unibo.tirocinio.martelli.controller.api.Controller;
 import it.unibo.tirocinio.martelli.database.api.Database;
@@ -35,5 +37,9 @@ public class ControllerImpl implements Controller, CrawlerObserver {
      @Override
      public String removeDatabaseElement() {
           return database.removeElement();
+     }
+
+     public List<String> showDatabase() {
+          return database.getElements();
      }
 }

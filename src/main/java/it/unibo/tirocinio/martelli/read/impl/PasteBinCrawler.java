@@ -50,7 +50,6 @@ public class PasteBinCrawler extends Crawler {
             public void run() {
                 try {
                     getController().addDatabaseElement(doGetRequest(scraping.getScrapeUrl()));
-                    System.out.println("fatto");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

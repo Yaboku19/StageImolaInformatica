@@ -11,6 +11,7 @@ import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.StructType;
 import it.unibo.tirocinio.martelli.database.api.Database;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class DatabaseSpark implements Database {
      private final SparkConf conf = new SparkConf()
@@ -70,6 +71,11 @@ public class DatabaseSpark implements Database {
      @Override
      public void show() {
           database.show();
+     }
+
+     @Override
+     public List<String> getElements() {
+          return new ArrayList<>(database.collectAsList()).stream().map(r -> r.getString(0)).collect(Collectors.toList());
      }
 
      @Override

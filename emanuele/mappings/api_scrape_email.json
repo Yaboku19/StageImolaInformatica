@@ -1,14 +1,19 @@
 {
-  "priority": 2,
+  "priority": 1,
   "request": {
     "urlPath": "/api_scrape_item.php",
-    "method": "GET"
+    "method": "GET",
+    "queryParameters": {
+      "i": {
+        "equalTo": "eCY69cus"
+      }
+    }
   },
   "response": {
     "status": 200,
     "headers": {
       "Content-Type": "application/json"
     },
-    "bodyFileName": "api_scrape_item.json"
+    "bodyFileName": "api_scrape_email.json"
   }
 }
