@@ -26,19 +26,20 @@ public class DatabaseSpark implements Database {
 
      public DatabaseSpark() {
           StructType structType = new StructType();
+          structType = structType.add("url", DataTypes.StringType, false);
           structType = structType.add("data", DataTypes.StringType, false);
-          Dataset<Row> df = spark.createDataFrame(new ArrayList<Row>(), structType);
+          Dataset<Row> df = spark.createDataFrame(new ArrayList<>(), structType);
           this.structType = structType;
           this.database = df;
      }
 
      @Override
-     public void addElement(final String element) {
+     public void addElement(final String url, final String data) {
           final long oldVersion = this.version;
-          final Row newRow = RowFactory.create(element);
+          final Row newRow = RowFactory.create(url, data);
           Dataset<Row> databaseNew = this.database.union(spark.createDataFrame(Collections.singletonList(newRow), structType));
           if (save(oldVersion, databaseNew)) {
-               addElement(element);
+               addElement(url, data);
           }
      }
 
@@ -77,6 +78,17 @@ public class DatabaseSpark implements Database {
      @Override
      public void closeDatabase() {
           spark.close();
+     }
+
+     public static void main(final String[] str) {
+          DatabaseSpark database = new DatabaseSpark();
+          database.addElement("io", "schifo");
+          database.addElement("uaa", "bleah");
+          String value = database.removeElement();
+          value = value.replace("[", "");
+          value = value.replace("]", "");
+          String [] splits = value.split("\\,");
+          System.out.println(value + " " + splits[1]);
      }
 }
 // [0-9a-z._-]+@(?:[^ .@]+\.)+[a-z]{2,4} per trovare l'e-mail

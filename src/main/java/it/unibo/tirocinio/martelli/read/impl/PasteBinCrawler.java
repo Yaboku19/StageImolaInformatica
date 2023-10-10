@@ -49,7 +49,7 @@ public class PasteBinCrawler extends Crawler {
             @Override
             public void run() {
                 try {
-                    getController().addDatabaseElement(doGetRequest(scraping.getScrapeUrl()));
+                    getController().addDatabaseElement(scraping.getScrapeUrl(),doGetRequest(scraping.getScrapeUrl()));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }

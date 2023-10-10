@@ -19,12 +19,16 @@ public class ExecutorImpl extends Executor {
         int i = 0;
         while (true) {
             final String value = controller.removeDatabaseElement();
-            i++;
-            for (final String regex : regexes) {
-                final Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
-                final Matcher matcher = pattern.matcher(value);
-                if(matcher.find()) {
-                    controller.addProblem("si" + i, value);
+            if (!"".equals(value)) {
+                final String[] values = value
+                        .replace("[", "").replace("]", "").split("\\,");
+                i++;
+                for (final String regex : regexes) {
+                    final Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+                    final Matcher matcher = pattern.matcher(values[1]);
+                    if (matcher.find()) {
+                        controller.addProblem(values[0], values[1]);
+                    }
                 }
             }
         }

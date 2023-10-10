@@ -40,8 +40,8 @@ public class ControllerImpl implements Controller, ReaderObserver, ExecutorObser
      }
 
      @Override
-     public void addDatabaseElement(final String element) {
-          database.addElement(element);
+     public void addDatabaseElement(final String url, final String data) {
+          database.addElement(url, data);
      }
 
      @Override

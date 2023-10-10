@@ -3,7 +3,7 @@ package it.unibo.tirocinio.martelli.database.api;
 import java.util.List;
 
 public interface Database {
-     void addElement(String element);
+     void addElement(String url, String data);
 
      String removeElement();
 
