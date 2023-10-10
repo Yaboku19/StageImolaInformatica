@@ -1,7 +1,5 @@
 package it.unibo.tirocinio.martelli.controller.api;
 
-public interface CrawlerObserver {
+public interface ReaderObserver {
      void addDatabaseElement(String element);
-
-     String removeDatabaseElement();
 }

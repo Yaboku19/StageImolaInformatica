@@ -51,10 +51,6 @@ public class DatabaseSpark implements Database {
           return true;
      }
 
-     public static void main(String[] args) {
-
-     }
-
      @Override
      public String removeElement() {
           final long oldVersion = version;
@@ -66,11 +62,6 @@ public class DatabaseSpark implements Database {
                return removeElement();
           }
           return toRemove;
-     }
-
-     @Override
-     public void show() {
-          database.show();
      }
 
      @Override

@@ -9,6 +9,10 @@ import java.util.List;
 @RestController
 public class ControllerSpringBot {
     private final Controller controller = new ControllerImpl();
+
+    public ControllerSpringBot() throws Exception {
+    }
+
     @GetMapping("/hello")
     public String HelloWorld(){
         return "Hello World";
@@ -20,8 +24,13 @@ public class ControllerSpringBot {
         return "ok";
     }
 
-    @GetMapping("/show")
-    public List<String> show() {
-        return controller.showDatabase();
+    @GetMapping("/showProblem")
+    public String show() {
+        return controller.showProblems();
     }
+
+    @GetMapping("/showDatabase")
+    public String showDatabase(){
+        return controller.showDatabse();
+    };
 }

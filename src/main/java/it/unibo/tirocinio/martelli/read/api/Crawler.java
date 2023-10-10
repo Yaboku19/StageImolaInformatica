@@ -9,13 +9,13 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
-import it.unibo.tirocinio.martelli.controller.api.CrawlerObserver;
+import it.unibo.tirocinio.martelli.controller.api.ReaderObserver;
 
 @SuppressWarnings("unchecked")
 public abstract class Crawler implements Runnable{
      private int connectionTimeout = 0;
      private int readTimeout = 0;
-     private CrawlerObserver controller;
+     private ReaderObserver controller;
      private Map<String, Object> config;
 
      private byte[] executeRequest(final HttpRequestBase request) throws IOException {
@@ -43,7 +43,7 @@ public abstract class Crawler implements Runnable{
          execute();
      }
 
-     public void setVariable(final Map<String, Object> config, final CrawlerObserver controller) {
+     public void setVariable(final Map<String, Object> config, final ReaderObserver controller) {
           this.controller = controller;
           this.config = config;
           this.connectionTimeout = (Integer)((Map<String, Object>)getConfig().get("timeout"))
@@ -56,7 +56,7 @@ public abstract class Crawler implements Runnable{
           return config;
      }
 
-     protected CrawlerObserver getController() {
+     protected ReaderObserver getController() {
           return controller;
      }
 

@@ -9,8 +9,6 @@ public interface Database {
 
      void closeDatabase();
 
-     void show();
-
      boolean isNotEmpty();
 
      List<String> getElements();
