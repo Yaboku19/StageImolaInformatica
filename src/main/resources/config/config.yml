@@ -8,5 +8,3 @@ crawler:
     timeout:
       read: 5000
       connect: 1000
-regex:
-  - '[0-9a-z._-]+@(?:[^ .@]+\.)+[a-z]{2,4}'

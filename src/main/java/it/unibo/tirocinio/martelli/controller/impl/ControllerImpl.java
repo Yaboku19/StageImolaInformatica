@@ -1,7 +1,6 @@
 package it.unibo.tirocinio.martelli.controller.impl;
 
-import java.net.URL;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import it.unibo.tirocinio.martelli.controller.api.ExecutorObserver;
@@ -19,24 +18,24 @@ public class ControllerImpl implements Controller, ReaderObserver, ExecutorObser
      private final Database database;
      private final CrawlerFactory factory;
      private final Executor executor;
-
+     private final Thread executorThread;
      private final Map<String, Object> config;
-     private final Map<String, String> problems = new HashMap<>();
+     private final List<String> problems = new ArrayList<>();
 
-     @SuppressWarnings("unchecked")
      public ControllerImpl() throws Exception{
           database = new DatabaseSpark();
           factory = new CrawlerFactory();
           final Setup setup = new SetupYml();
           this.config = setup.readSetup(ClassLoader.getSystemResource("config/config.yml"));
-          executor = new ExecutorImpl(this, (List<String>) config.get("regex"));
+          executor = new ExecutorImpl(this);
+          executorThread = new Thread(executor);
      }
 
      @Override
      @SuppressWarnings("unchecked")
      public void execute() throws Exception {
           factory.createCrawler((Map<String, Object>)config.get("crawler"), this);
-          new Thread(executor).start();
+          executorThread.start();
      }
 
      @Override
@@ -54,8 +53,9 @@ public class ControllerImpl implements Controller, ReaderObserver, ExecutorObser
      }
 
      @Override
-     public void addProblem(final String url, final String value) {
-          problems.put(url, value);
+     public void addProblem(final String url, final String value, final String type) {
+          final String string = "url: " + url + " value: " + value + " type: " + type;
+          problems.add(string);
      }
 
      public String showProblems() {
@@ -65,5 +65,16 @@ public class ControllerImpl implements Controller, ReaderObserver, ExecutorObser
      @Override
      public String showDatabse() {
           return database.getElements().toString();
+     }
+
+     @Override
+     public void addRegex(final String regex, final String type) {
+          executor.addRegex(regex, type);
+     }
+
+     @Override
+     public void closeApplication() {
+          database.closeDatabase();
+          System.exit(0);
      }
 }

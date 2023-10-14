@@ -4,5 +4,5 @@ import java.util.Map;
 import java.net.URL;
 
 public interface Setup {
-     public Map<String, Object> readSetup(URL setupPath) throws Exception;
+     Map<String, Object> readSetup(URL setupPath) throws Exception;
 }

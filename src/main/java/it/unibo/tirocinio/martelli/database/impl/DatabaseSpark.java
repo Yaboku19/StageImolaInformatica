@@ -87,7 +87,7 @@ public class DatabaseSpark implements Database {
           String value = database.removeElement();
           value = value.replace("[", "");
           value = value.replace("]", "");
-          String [] splits = value.split("\\,");
+          String [] splits = value.split(",");
           System.out.println(value + " " + splits[1]);
      }
 }

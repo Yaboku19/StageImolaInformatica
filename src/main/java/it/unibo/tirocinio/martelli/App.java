@@ -1,6 +1,5 @@
 package it.unibo.tirocinio.martelli;
 
-import it.unibo.tirocinio.martelli.controller.impl.ControllerImpl;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
