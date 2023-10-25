@@ -1,4 +1,4 @@
-package it.unibo.tirocinio.martelli.controller.api;
+package it.unibo.tirocinio.martelli.springbot.api;
 
 public interface ExecutorObserver {
     String removeDatabaseElement();

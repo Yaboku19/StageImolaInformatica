@@ -1,0 +1,11 @@
+settings:
+  crawler:
+    prefix: it.unibo.tirocinio.martelli.read.impl.
+    load_class:
+      - PasteBinCrawler
+    pastebin:
+      url: "http://localhost:8081/api_scraping.php"
+      waitingTime: 1
+      timeout:
+        read: 5000
+        connect: 1000

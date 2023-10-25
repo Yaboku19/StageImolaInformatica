@@ -9,7 +9,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
-import it.unibo.tirocinio.martelli.controller.api.ReaderObserver;
+import it.unibo.tirocinio.martelli.springbot.api.ReaderObserver;
 
 @SuppressWarnings("unchecked")
 public abstract class Crawler implements Runnable{

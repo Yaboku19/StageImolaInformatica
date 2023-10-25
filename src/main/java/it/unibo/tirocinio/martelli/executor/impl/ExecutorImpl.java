@@ -1,6 +1,6 @@
 package it.unibo.tirocinio.martelli.executor.impl;
 
-import it.unibo.tirocinio.martelli.controller.api.ExecutorObserver;
+import it.unibo.tirocinio.martelli.springbot.api.ExecutorObserver;
 import it.unibo.tirocinio.martelli.executor.api.Executor;
 
 import java.util.HashMap;
