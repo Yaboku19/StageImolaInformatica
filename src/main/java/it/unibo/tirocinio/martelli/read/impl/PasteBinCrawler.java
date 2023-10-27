@@ -14,29 +14,29 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 public class PasteBinCrawler extends Crawler {
     private final ScheduledExecutorService scheduler = Executors.newScheduledThreadPool(1);
 
-    protected void execute() {
+    protected void read() {
         List<PastebinScrapingItem> scrapingList = new ArrayList<>();
         try {
-            scrapingList = getScrapingItem(doGetRequest((String) getConfig().get("url")));
+            scrapingList = getScrapingItem(doGetRequest((String) getConfigMap().get("url")));
         } catch (IOException e) {
-            e.printStackTrace();
+
         }
         for (int i = 0; i < scrapingList.size(); i++) {
-            scheduler.schedule(getReader(scrapingList.get(i)), 
-                                i * getWaitingTime(), SECONDS);
+            scheduler.schedule(getAdder(scrapingList.get(i)),
+                    (long) i * getWaitingTime(), SECONDS);
         }
         scheduler.shutdown();
     }
 
     private int getWaitingTime() {
-        return (Integer)getConfig().get("waitingTime");
+        return (Integer)getConfigMap().get("waitingTime");
     }
 
     private List<PastebinScrapingItem> getScrapingItem(final String data) throws IOException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        JsonNode jsonArray = objectMapper.readTree(data);
-        List<PastebinScrapingItem> scrapingList = new ArrayList<>();
-        for (JsonNode node : jsonArray) {
+        final ObjectMapper objectMapper = new ObjectMapper();
+        final JsonNode jsonArray = objectMapper.readTree(data);
+        final List<PastebinScrapingItem> scrapingList = new ArrayList<>();
+        for (final JsonNode node : jsonArray) {
             PastebinScrapingItem scraping = 
                     objectMapper.treeToValue(node, PastebinScrapingItem.class);
             scrapingList.add(scraping);
@@ -44,16 +44,13 @@ public class PasteBinCrawler extends Crawler {
         return scrapingList;
     }
 
-    private Runnable getReader(final PastebinScrapingItem scraping) {
-        return new Runnable() {
-            @Override
-            public void run() {
+    private Runnable getAdder(final PastebinScrapingItem scraping) {
+        return () -> {
                 try {
                     getController().addDatabaseElement(scraping.getScrapeUrl(),doGetRequest(scraping.getScrapeUrl()));
                 } catch (IOException e) {
-                    e.printStackTrace();
+
                 }
-            }
         };
     }
 

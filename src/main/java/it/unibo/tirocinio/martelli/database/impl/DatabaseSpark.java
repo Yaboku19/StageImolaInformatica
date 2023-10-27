@@ -37,7 +37,7 @@ public class DatabaseSpark implements Database {
      public void addElement(final String url, final String data) {
           final long oldVersion = this.version;
           final Row newRow = RowFactory.create(url, data);
-          Dataset<Row> databaseNew = this.database.union(spark.createDataFrame(Collections.singletonList(newRow), structType));
+          final Dataset<Row> databaseNew = this.database.union(spark.createDataFrame(Collections.singletonList(newRow), structType));
           if (save(oldVersion, databaseNew)) {
                addElement(url, data);
           }
@@ -53,26 +53,8 @@ public class DatabaseSpark implements Database {
      }
 
      @Override
-     public String removeElement() {
-          final long oldVersion = version;
-          List<Row> list = new ArrayList<>(database.collectAsList());
-          final String toRemove = list.get(0).toString();
-          list.remove(0);
-          Dataset<Row> databaseNew = spark.createDataFrame(list, structType);
-          if (save(oldVersion, databaseNew)) {
-               return removeElement();
-          }
-          return toRemove;
-     }
-
-     @Override
-     public List<String> getElements() {
-          return new ArrayList<>(database.collectAsList()).stream().map(r -> r.getString(0)).collect(Collectors.toList());
-     }
-
-     @Override
-     public boolean isNotEmpty() {
-          return database.count() > 0;
+     public List<String> getAllElements() {
+          return new ArrayList<>(database.collectAsList()).stream().map(Row::toString).collect(Collectors.toList());
      }
 
      @Override
@@ -84,11 +66,7 @@ public class DatabaseSpark implements Database {
           DatabaseSpark database = new DatabaseSpark();
           database.addElement("io", "schifo");
           database.addElement("uaa", "bleah");
-          String value = database.removeElement();
-          value = value.replace("[", "");
-          value = value.replace("]", "");
-          String [] splits = value.split(",");
-          System.out.println(value + " " + splits[1]);
+          System.out.println(database.getAllElements().get(1));
      }
 }
 // [0-9a-z._-]+@(?:[^ .@]+\.)+[a-z]{2,4} per trovare l'e-mail

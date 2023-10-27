@@ -9,14 +9,14 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpRequestBase;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
-import it.unibo.tirocinio.martelli.springbot.api.ReaderObserver;
+import it.unibo.tirocinio.martelli.springboot.api.ReaderObserver;
 
 @SuppressWarnings("unchecked")
 public abstract class Crawler implements Runnable{
      private int connectionTimeout = 0;
      private int readTimeout = 0;
      private ReaderObserver controller;
-     private Map<String, Object> config;
+     private Map<String, Object> configMap;
 
      private byte[] executeRequest(final HttpRequestBase request) throws IOException {
           RequestConfig.custom()
@@ -40,27 +40,27 @@ public abstract class Crawler implements Runnable{
 
      @Override
      public void run(){  
-         execute();
+         read();
      }
 
-     public void setVariable(final Map<String, Object> config, final ReaderObserver controller) {
+     public void setConfig(final Map<String, Object> configMap, final ReaderObserver controller) {
           this.controller = controller;
-          this.config = config;
-          this.connectionTimeout = (Integer)((Map<String, Object>)getConfig().get("timeout"))
+          this.configMap = configMap;
+          this.connectionTimeout = (Integer)((Map<String, Object>)configMap.get("timeout"))
                .get("connect");
-          this.readTimeout = (Integer)((Map<String, Object>)getConfig().get("timeout"))
+          this.readTimeout = (Integer)((Map<String, Object>)configMap.get("timeout"))
                .get("read");
      }
 
-     protected Map<String, Object> getConfig() {
-          return config;
+     protected Map<String, Object> getConfigMap() {
+          return configMap;
      }
 
      protected ReaderObserver getController() {
           return controller;
      }
 
-     protected abstract void execute();
+     protected abstract void read();
 
      public abstract String getConfigPrefix();
 }

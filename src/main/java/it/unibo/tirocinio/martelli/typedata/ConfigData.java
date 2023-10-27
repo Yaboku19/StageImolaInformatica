@@ -15,7 +15,7 @@ public class ConfigData {
         return crawler;
     }
 
-    public void setCrawler(Map<String, Object> crawler) {
+    public void setCrawler(final Map<String, Object> crawler) {
         this.crawler = crawler;
     }
 }
