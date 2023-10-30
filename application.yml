@@ -9,3 +9,6 @@ settings:
       timeout:
         read: 5000
         connect: 1000
+
+server:
+  port: 8080
