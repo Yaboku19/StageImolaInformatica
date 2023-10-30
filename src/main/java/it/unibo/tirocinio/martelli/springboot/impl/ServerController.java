@@ -69,7 +69,6 @@ public class ServerController implements SearcherObserver, ReaderObserver {
     @GetMapping("/exit")
     public String exit() {
         database.closeDatabase();
-        searcher.notify();
         System.exit(0);
         return "exit";
     }

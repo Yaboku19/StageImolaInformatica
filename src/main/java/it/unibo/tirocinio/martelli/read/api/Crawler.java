@@ -2,6 +2,7 @@ package it.unibo.tirocinio.martelli.read.api;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Map;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -35,7 +36,7 @@ public abstract class Crawler implements Runnable{
      }
 
      protected String doGetRequest(final String url) throws IOException {
-          return new String(executeRequest(new HttpGet(url)));
+          return Arrays.toString(executeRequest(new HttpGet(url)));
      }
 
      @Override

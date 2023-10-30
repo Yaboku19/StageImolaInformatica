@@ -34,15 +34,12 @@ public class SearcherImpl extends Searcher {
 
     @Override
     public void controlElement(final String url, final String element) {
-        for (final String regex : regexMap.keySet()) {
-            final Pattern pattern = Pattern.compile(regex, Pattern.CASE_INSENSITIVE);
+        for (final Map.Entry<String, String> pair : regexMap.entrySet()) {
+            final Pattern pattern = Pattern.compile(pair.getKey(), Pattern.CASE_INSENSITIVE);
             final Matcher matcher = pattern.matcher(element);
             if (matcher.find()) {
-                controller.addDataBreach(url, element, regexMap.get(regex));
+                controller.addDataBreach(url, element, regexMap.get(pair.getValue()));
             }
         }
     }
 }
-/*
-  [0-9a-z._-]+@(?:[^ .@]+\.)+[a-z]{2,4}
- */

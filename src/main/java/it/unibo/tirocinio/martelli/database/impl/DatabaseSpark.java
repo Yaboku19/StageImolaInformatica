@@ -25,12 +25,11 @@ public class DatabaseSpark implements Database {
      private long version = 1;
 
      public DatabaseSpark() {
-          StructType structType = new StructType();
-          structType = structType.add("url", DataTypes.StringType, false);
-          structType = structType.add("data", DataTypes.StringType, false);
-          Dataset<Row> df = spark.createDataFrame(new ArrayList<>(), structType);
-          this.structType = structType;
-          this.database = df;
+          StructType structTypeNev = new StructType();
+          structTypeNev = structTypeNev.add("url", DataTypes.StringType, false);
+          structTypeNev = structTypeNev.add("data", DataTypes.StringType, false);
+          this.structType = structTypeNev;
+          this.database = spark.createDataFrame(new ArrayList<>(), structType);
      }
 
      @Override
