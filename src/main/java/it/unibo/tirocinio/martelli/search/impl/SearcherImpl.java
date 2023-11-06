@@ -37,8 +37,9 @@ public class SearcherImpl extends Searcher {
         for (final Map.Entry<String, String> pair : regexMap.entrySet()) {
             final Pattern pattern = Pattern.compile(pair.getKey(), Pattern.CASE_INSENSITIVE);
             final Matcher matcher = pattern.matcher(element);
+            System.out.println();
             if (matcher.find()) {
-                controller.addDataBreach(url, element, regexMap.get(pair.getValue()));
+                controller.addDataBreach(url, element, pair.getValue());
             }
         }
     }

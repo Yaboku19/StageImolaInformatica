@@ -60,12 +60,5 @@ public class DatabaseSpark implements Database {
      public void closeDatabase() {
           spark.close();
      }
-
-     public static void main(final String[] str) {
-          DatabaseSpark database = new DatabaseSpark();
-          database.addElement("io", "schifo");
-          database.addElement("uaa", "bleah");
-          System.out.println(database.getAllElements().get(1));
-     }
 }
 // [0-9a-z._-]+@(?:[^ .@]+\.)+[a-z]{2,4} per trovare l'e-mail

@@ -40,11 +40,6 @@ public class ServerController implements SearcherObserver, ReaderObserver {
         };
     }
 
-    @GetMapping("/show")
-    public String show() {
-        return configMap.getCrawler().toString();
-    }
-
     @GetMapping("/info")
     public String getInfo() {
         return "for add any regex go on use the form when the application is running is impossible to add regex" +
@@ -80,6 +75,7 @@ public class ServerController implements SearcherObserver, ReaderObserver {
 
     @Override
     public void addDataBreach(final String url, final String dataBreach, final String identifierType) {
+        System.out.println("qui");
         final String string = "url: " + url + " |||||| value: " + dataBreach + " |||||| type: " + identifierType;
         dataBreachesList.add(string);
     }

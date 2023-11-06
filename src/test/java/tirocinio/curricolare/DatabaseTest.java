@@ -1,27 +1,25 @@
 package tirocinio.curricolare;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
-
 import it.unibo.tirocinio.martelli.database.api.Database;
 import it.unibo.tirocinio.martelli.database.impl.DatabaseSpark;
-import org.junit.Test;
 import org.junit.jupiter.api.BeforeEach;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.Test;
+import java.util.List;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest
-public class AppTest 
+public class DatabaseTest
 {
-    Database database;
+    Database database = new DatabaseSpark();
     @BeforeEach
     public void before() {
-        database = new DatabaseSpark();
+
     }
     @Test
     public void addElementUT() {
-        database = new DatabaseSpark();
         assertEquals(0, database.getAllElements().size());
-        database.addElement("cc", "aa");
+        database.addElement("one", "oneT");
         assertEquals(1, database.getAllElements().size());
+        System.out.println(database.getAllElements().get(0));
+        assertEquals(List.of("[one,oneT]"), database.getAllElements());
     }
 }
