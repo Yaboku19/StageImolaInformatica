@@ -19,7 +19,7 @@ public class PasteBinCrawler extends Crawler {
         try {
             scrapingList = getScrapingItem(doGetRequest((String) getConfigMap().get("url")));
         } catch (IOException e) {
-
+            e.printStackTrace();
         }
         for (int i = 0; i < scrapingList.size(); i++) {
             scheduler.schedule(getAdder(scrapingList.get(i)),

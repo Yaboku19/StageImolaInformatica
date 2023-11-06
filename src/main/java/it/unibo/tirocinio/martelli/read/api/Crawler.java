@@ -2,7 +2,6 @@ package it.unibo.tirocinio.martelli.read.api;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.util.Arrays;
 import java.util.Map;
 import org.apache.http.client.config.RequestConfig;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -25,18 +24,18 @@ public abstract class Crawler implements Runnable{
                     .setConnectionRequestTimeout(readTimeout
           )
                     .setSocketTimeout(connectionTimeout).build();
-          
+
           try (CloseableHttpClient httpclient = HttpClientBuilder.create().build();
-                    CloseableHttpResponse response = httpclient.execute(request); 
+                    CloseableHttpResponse response = httpclient.execute(request);
                     ByteArrayOutputStream bos = new ByteArrayOutputStream()) {
-               
+
                response.getEntity().writeTo(bos);
                return bos.toByteArray();
           }
      }
 
      protected String doGetRequest(final String url) throws IOException {
-          return Arrays.toString(executeRequest(new HttpGet(url)));
+          return new String(executeRequest(new HttpGet(url)));
      }
 
      @Override
